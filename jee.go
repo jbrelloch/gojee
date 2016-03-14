@@ -655,12 +655,12 @@ func EvalCustom(opMap *OpMap, t *TokenTree, msg BMsg) (interface{}, error) {
 				} else if !ok && tokenVal == "==" {
 					return false, nil
 				} else if !ok {
-					return nil, errors.New(fmt.Sprintf("cannot compare types: %s, %s", reflect.TypeOf(a), reflect.TypeOf(b)))
+					return nil, errors.New(fmt.Sprintf("FLOAT64 OP: cannot compare types: %s, %s [values: %s, %s]", reflect.TypeOf(a), reflect.TypeOf(b), a, b))
 				}
 
 				_, ok = opMap.Float[tokenVal]
 				if !ok {
-					return nil, errors.New(fmt.Sprintf("invalid operator for type: %s, %s", tokenVal, reflect.TypeOf(a)))
+					return nil, errors.New(fmt.Sprintf("FLOAT64 OP: invalid operator for type: %s, %s [value: %s]", tokenVal, reflect.TypeOf(a), a))
 				}
 
 				return opMap.Float[tokenVal](ta, bf), nil
@@ -671,12 +671,12 @@ func EvalCustom(opMap *OpMap, t *TokenTree, msg BMsg) (interface{}, error) {
 				} else if !ok && tokenVal == "==" {
 					return false, nil
 				} else if !ok {
-					return nil, errors.New(fmt.Sprintf("cannot compare types: %s, %s", reflect.TypeOf(a), reflect.TypeOf(b)))
+					return nil, errors.New(fmt.Sprintf("STRING OP: cannot compare types: %s, %s [values: %s, %s]", reflect.TypeOf(a), reflect.TypeOf(b), a, b))
 				}
 
 				_, ok = opMap.String[tokenVal]
 				if !ok {
-					return nil, errors.New(fmt.Sprintf("invalid operator for type: %s, %s", tokenVal, reflect.TypeOf(a)))
+					return nil, errors.New(fmt.Sprintf("STRING OP: invalid operator for type: %s, %s [value: %s]", tokenVal, reflect.TypeOf(a), a))
 				}
 
 				return opMap.String[tokenVal](ta, bs), nil
@@ -687,19 +687,19 @@ func EvalCustom(opMap *OpMap, t *TokenTree, msg BMsg) (interface{}, error) {
 				} else if !ok && tokenVal == "==" {
 					return false, nil
 				} else if !ok {
-					return nil, errors.New(fmt.Sprintf("cannot compare types: %s, %s", reflect.TypeOf(a), reflect.TypeOf(b)))
+					return nil, errors.New(fmt.Sprintf("BOOL OP: cannot compare types: %s, %s [values: %s, %s]", reflect.TypeOf(a), reflect.TypeOf(b), a, b))
 				}
 
 				_, ok = opMap.Bool[tokenVal]
 				if !ok {
-					return nil, errors.New(fmt.Sprintf("invalid operator for type: %s, %s", tokenVal, reflect.TypeOf(a)))
+					return nil, errors.New(fmt.Sprintf("BOOL OP: invalid operator for type: %s, %s [value: %s]", tokenVal, reflect.TypeOf(a), a))
 				}
 
 				return opMap.Bool[tokenVal](ta, bb), nil
 			default:
 				_, ok := opMap.Nil[tokenVal]
 				if !ok {
-					return nil, errors.New(fmt.Sprintf("invalid operator for type: %s, %s", tokenVal, reflect.TypeOf(a)))
+					return nil, errors.New(fmt.Sprintf("DEFAULT OP: invalid operator for type: %s, %s [value: %s]", tokenVal, reflect.TypeOf(a), a))
 				}
 
 				return opMap.Nil[tokenVal](a, b), nil
