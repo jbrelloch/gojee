@@ -655,7 +655,10 @@ func EvalCustom(opMap *OpMap, t *TokenTree, msg BMsg) (interface{}, error) {
 				} else if !ok && tokenVal == "==" {
 					return false, nil
 				} else if !ok {
-					return nil, errors.New(fmt.Sprintf("FLOAT64 OP: cannot compare types: %s, %s [values: %s, %s]", reflect.TypeOf(a), reflect.TypeOf(b), a, b))
+					bf, ok := b.(int64)
+					if(!ok) {
+						return nil, errors.New(fmt.Sprintf("FLOAT64 OP: cannot compare types: %s, %s [values: %s, %s]", reflect.TypeOf(a), reflect.TypeOf(b), a, b))
+					}
 				}
 
 				_, ok = opMap.Float[tokenVal]
